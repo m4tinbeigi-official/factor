@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>فاکتور رسمی هوشمند | نسخه نهایی</title>
+    <title>فاکتور ساز داینامیک | نسخه نهایی</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,8 +18,8 @@
             --border-color: #dfe4ea;
         }
 
-        /* --- تنظیمات فونت سراسری و اجباری --- */
-        body, input, textarea, select, button, table, span, div {
+        /* --- تنظیمات فونت سراسری --- */
+        body, input, textarea, select, button, table, span, div, h1, h2, h3 {
             font-family: 'Vazirmatn', sans-serif !important;
         }
 
@@ -27,7 +27,7 @@
             margin: 0; display: flex; height: 100vh; background: #ced6e0; overflow: hidden;
         }
 
-        /* --- استایل نوار تنظیمات (Sidebar) --- */
+        /* --- نوار تنظیمات --- */
         aside.sidebar {
             width: 360px; background: #fff; display: flex; flex-direction: column;
             border-left: 1px solid #ccc; z-index: 10; box-shadow: 0 0 15px rgba(0,0,0,0.1);
@@ -130,7 +130,7 @@
     <aside class="sidebar">
         <div class="sidebar-header">
             <h3>تنظیمات فاکتور</h3>
-            <div style="font-size: 10px; opacity: 0.8;">نسخه نهایی</div>
+            <div style="font-size: 10px; opacity: 0.8;">نسخه ۵.۰</div>
         </div>
         <div class="sidebar-content">
             
@@ -157,6 +157,10 @@
             <details>
                 <summary>مشخصات عمومی <span class="material-icons" style="font-size:16px">info</span></summary>
                 <div class="details-body">
+                    <div class="form-group">
+                        <label>عنوان فاکتور:</label>
+                        <input type="text" id="inp_inv_title" oninput="save()" placeholder="مثال: پیش فاکتور">
+                    </div>
                     <div class="row">
                         <div class="col"><label>سریال</label><input type="text" id="inp_serial" oninput="save()"></div>
                         <div class="col"><label>تاریخ</label><input type="text" id="inp_date" value="1404/01/01" oninput="save()"></div>
@@ -224,7 +228,7 @@
         <div class="paper" id="invoice_paper">
             <div class="invoice-header">
                 <div class="logo-box" id="out_logo_box"><span style="font-size:10px; color:#ccc;">محل لوگو</span></div>
-                <div class="inv-title"><h1>صورتحساب فروش کالا و خدمات</h1></div>
+                <div class="inv-title"><h1 id="out_inv_title">صورتحساب فروش کالا و خدمات</h1></div>
                 <div class="inv-details">
                     شماره سریال: <span id="out_serial" class="font-bold"></span><br>
                     تاریخ صدور: <span id="out_date" class="font-bold"></span>
@@ -315,13 +319,17 @@
 
     <script>
         let state = { config: { color: '#2c3e50', tax: false, logo: null }, fields: {}, items: [] };
-        const fieldIds = ['serial','date','s_name','s_eco','s_nat','s_tel','s_zip','s_addr','b_name','b_eco','b_nat','b_tel','b_zip','b_addr'];
+        // لیست تمام فیلدهای متنی (inv_title اضافه شد)
+        const fieldIds = ['inv_title', 'serial','date','s_name','s_eco','s_nat','s_tel','s_zip','s_addr','b_name','b_eco','b_nat','b_tel','b_zip','b_addr'];
 
         function init() {
-            const loaded = localStorage.getItem('invoice_v4_final');
+            const loaded = localStorage.getItem('invoice_v5_pro');
             if (loaded) try { state = JSON.parse(loaded); } catch(e){}
             else addItem(false);
             
+            // تنظیم پیش‌فرض برای عنوان فاکتور اگر خالی باشد
+            if(!state.fields.inv_title) state.fields.inv_title = "صورتحساب فروش کالا و خدمات";
+
             document.getElementById('inp_color').value = state.config.color || '#2c3e50';
             document.getElementById('inp_tax').checked = state.config.tax || false;
             updateTheme();
@@ -341,7 +349,7 @@
             });
             state.config.color = document.getElementById('inp_color').value;
             state.config.tax = document.getElementById('inp_tax').checked;
-            localStorage.setItem('invoice_v4_final', JSON.stringify(state));
+            localStorage.setItem('invoice_v5_pro', JSON.stringify(state));
             render();
         }
 
@@ -377,9 +385,14 @@
         }
 
         function render() {
+            // پر کردن همه فیلدهای متنی (از جمله عنوان فاکتور)
             fieldIds.forEach(id => {
                 const el = document.getElementById('out_' + id);
-                if(el) el.innerText = toPersian(state.fields[id]);
+                if(el) {
+                    // برای عنوان فاکتور اگر خالی بود دیفالت بگذار
+                    if(id === 'inv_title' && !state.fields[id]) el.innerText = "صورتحساب فروش کالا و خدمات";
+                    else el.innerText = toPersian(state.fields[id]);
+                }
             });
             const logoBox = document.getElementById('out_logo_box');
             logoBox.innerHTML = state.config.logo ? `<img src="${state.config.logo}">` : `<span style="font-size:10px; color:#ccc;">محل لوگو</span>`;
@@ -427,11 +440,11 @@
         function importData(input) {
             if (input.files && input.files[0]) {
                 const reader = new FileReader();
-                reader.onload = function(e) { try { state = JSON.parse(e.target.result); localStorage.setItem('invoice_v4_final', JSON.stringify(state)); location.reload(); } catch(err) { alert('فایل نامعتبر'); } };
+                reader.onload = function(e) { try { state = JSON.parse(e.target.result); localStorage.setItem('invoice_v5_pro', JSON.stringify(state)); location.reload(); } catch(err) { alert('فایل نامعتبر'); } };
                 reader.readAsText(input.files[0]);
             }
         }
-        function resetAll() { if(confirm('پاک شود؟')){ localStorage.removeItem('invoice_v4_final'); location.reload(); } }
+        function resetAll() { if(confirm('پاک شود؟')){ localStorage.removeItem('invoice_v5_pro'); location.reload(); } }
 
         function numToPersianWords(number) {
             if (number === 0) return 'صفر';
