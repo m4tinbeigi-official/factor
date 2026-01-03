@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سیستم جامع فاکتور ساز هوشمند v6</title>
+    <title>سیستم فاکتور رسمی هوشمند v7</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -17,46 +17,43 @@
         * { box-sizing: border-box; font-family: 'Vazirmatn', sans-serif; }
         body { margin: 0; display: flex; height: 100vh; background: #ced6e0; overflow: hidden; }
 
-        /* نوار تنظیمات */
-        aside.sidebar { width: 420px; background: #fff; border-left: 1px solid #ccc; display: flex; flex-direction: column; z-index: 100; box-shadow: 2px 0 15px rgba(0,0,0,0.2); }
-        .sidebar-header { padding: 15px; background: var(--primary); color: white; text-align: center; display: flex; justify-content: space-between; align-items: center; }
+        aside.sidebar { width: 440px; background: #fff; border-left: 1px solid #ccc; display: flex; flex-direction: column; z-index: 100; box-shadow: 2px 0 15px rgba(0,0,0,0.2); }
+        .sidebar-header { padding: 15px; background: var(--primary); color: white; text-align: center; }
         .sidebar-content { flex: 1; overflow-y: auto; padding: 15px; background: #f9f9f9; }
 
-        details { background: #fff; border: 1px solid var(--border-color); border-radius: 10px; margin-bottom: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
-        summary { padding: 12px; cursor: pointer; font-weight: bold; font-size: 14px; background: #fff; display: flex; align-items: center; gap: 10px; border-radius: 10px; color: #2c3e50; }
+        details { background: #fff; border: 1px solid var(--border-color); border-radius: 10px; margin-bottom: 12px; }
+        summary { padding: 12px; cursor: pointer; font-weight: bold; font-size: 13px; background: #fff; display: flex; align-items: center; gap: 8px; border-radius: 10px; color: #2c3e50; }
         .details-body { padding: 15px; border-top: 1px solid var(--border-color); }
 
-        .form-group { margin-bottom: 12px; }
-        label { display: block; font-size: 11px; color: #57606f; margin-bottom: 4px; font-weight: 800; }
-        input, textarea, select { width: 100%; padding: 10px; border: 1px solid #d1d8e0; border-radius: 8px; font-size: 13px; outline: none; transition: 0.3s; background: #fff; }
-        input:focus { border-color: var(--primary); box-shadow: 0 0 8px rgba(30,55,153,0.15); }
+        .form-group { margin-bottom: 10px; }
+        label { display: block; font-size: 11px; color: #57606f; margin-bottom: 3px; font-weight: bold; }
+        input, textarea, select { width: 100%; padding: 8px; border: 1px solid #d1d8e0; border-radius: 6px; font-size: 12px; outline: none; transition: 0.3s; }
+        input:focus { border-color: var(--primary); }
 
-        .btn { border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer; font-size: 12px; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.3s; font-weight: bold; }
+        .btn { border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-size: 12px; display: flex; align-items: center; justify-content: center; gap: 5px; transition: 0.3s; font-weight: bold; width: 100%; }
         .btn-primary { background: var(--primary); color: white; }
-        .btn-success { background: #20bf6b; color: white; }
         .btn-danger { background: #eb4d4b; color: white; }
-        .btn-wa { background: #25D366; color: white; } /* WhatsApp Color */
-        .btn-full { width: 100%; margin-top: 8px; }
+        .btn-wa { background: #25D366; color: white; }
+        .btn-success { background: #20bf6b; color: white; }
+        .grid-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
 
-        /* آرشیو */
-        .archive-item { padding: 12px; border: 1px solid #eee; margin-bottom: 5px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; background: #fff; cursor: pointer; }
-        .archive-item:hover { border-color: var(--primary); background: #f1f2f6; }
+        .archive-item { padding: 10px; border: 1px solid #eee; margin-bottom: 5px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; background: #fff; cursor: pointer; font-size: 11px; }
 
-        /* پیش‌نمایش فاکتور */
-        main.preview-area { flex: 1; overflow-y: auto; padding: 40px; display: flex; justify-content: center; }
-        .paper { width: 210mm; min-height: 297mm; background: white; padding: 15mm; position: relative; box-shadow: 0 0 30px rgba(0,0,0,0.2); box-sizing: border-box; }
+        main.preview-area { flex: 1; overflow-y: auto; padding: 30px; display: flex; justify-content: center; }
+        .paper { width: 210mm; min-height: 297mm; background: white; padding: 12mm; position: relative; box-shadow: 0 0 20px rgba(0,0,0,0.1); box-sizing: border-box; }
 
-        .inv-table { width: 100%; border-collapse: collapse; margin-top: 20px; border: 2px solid #000; }
-        .inv-table th { background: #f1f2f6; color: #000; padding: 10px; border: 1px solid #000; font-size: 13px; }
-        .inv-table td { border: 1px solid #000; padding: 8px; text-align: center; font-size: 12px; }
+        .inv-table { width: 100%; border-collapse: collapse; margin-top: 15px; border: 1.5px solid #000; }
+        .inv-table th { background: #f2f2f2; padding: 8px; border: 1px solid #000; font-size: 12px; }
+        .inv-table td { border: 1px solid #000; padding: 6px; text-align: center; font-size: 11px; }
 
-        .sig-canvas { border: 1px dashed #ccc; background: #fafafa; width: 100%; height: 100px; border-radius: 5px; touch-action: none; }
-        .watermark { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-45deg); font-size: 90px; color: rgba(0,0,0,0.05); font-weight: 900; pointer-events: none; z-index: 0; white-space: nowrap; }
+        .sig-canvas { border: 1px dashed #ccc; background: #fafafa; width: 100%; height: 80px; border-radius: 5px; }
+        
+        .info-box { border: 1px solid #000; padding: 8px; border-radius: 4px; font-size: 11px; line-height: 1.6; }
+        .info-title { background: #eee; font-weight: bold; padding: 2px 8px; display: block; margin-bottom: 5px; border-bottom: 1px solid #000; }
 
         @media print {
             aside.sidebar { display: none !important; }
-            body { background: white; }
-            main.preview-area { padding: 0; }
+            main.preview-area { padding: 0; background: white; }
             .paper { box-shadow: none; margin: 0; border: none; width: 100%; }
         }
     </style>
@@ -65,80 +62,82 @@
 
     <aside class="sidebar">
         <div class="sidebar-header">
-            <strong><span class="material-icons">verified</span> پنل مدیریت فاکتور</strong>
-            <small>v6.0 Gold</small>
+            <h3 style="margin:0">پنل فاکتور رسمی</h3>
         </div>
         
         <div class="sidebar-content">
             <details>
-                <summary><span class="material-icons">history</span> آرشیو فاکتورها (بی‌نهایت)</summary>
+                <summary><span class="material-icons">folder_shared</span> فاکتورهای ذخیره شده</summary>
                 <div class="details-body" id="archive_list" style="padding:5px;"></div>
             </details>
 
             <details open>
-                <summary><span class="material-icons">storefront</span> اطلاعات ثابت فروشنده</summary>
+                <summary><span class="material-icons">settings</span> تنظیمات فاکتور و شرکت</summary>
                 <div class="details-body">
-                    <div class="form-group"><label>نام برند/شخص</label><input type="text" id="s_name" oninput="saveSeller()"></div>
-                    <div class="form-group"><label>تلفن</label><input type="text" id="s_tel" oninput="saveSeller()"></div>
-                    <div class="form-group"><label>آدرس</label><textarea id="s_addr" rows="2" oninput="saveSeller()"></textarea></div>
-                    <div class="form-group">
-                        <label>لوگو شرکت</label>
-                        <input type="file" accept="image/*" onchange="uploadLogo(this)">
+                    <div class="form-group"><label>عنوان اصلی فاکتور</label><input type="text" id="inv_title" value="صورتحساب فروش کالا و خدمات" oninput="render()"></div>
+                    <div class="form-group"><label>نام شرکت / فروشنده</label><input type="text" id="s_name" oninput="saveSeller()"></div>
+                    <div class="row" style="display:flex; gap:5px">
+                        <div class="col"><label>کد اقتصادی</label><input type="text" id="s_eco" oninput="saveSeller()"></div>
+                        <div class="col"><label>شناسه ملی</label><input type="text" id="s_nat" oninput="saveSeller()"></div>
                     </div>
-                    <button class="btn btn-danger btn-full" onclick="clearSeller()">پاکسازی کل اطلاعات فروشنده</button>
+                    <div class="row" style="display:flex; gap:5px">
+                        <div class="col"><label>تلفن</label><input type="text" id="s_tel" oninput="saveSeller()"></div>
+                        <div class="col"><label>کد پستی</label><input type="text" id="s_zip" oninput="saveSeller()"></div>
+                    </div>
+                    <div class="form-group"><label>آدرس کامل</label><textarea id="s_addr" rows="2" oninput="saveSeller()"></textarea></div>
+                    <div class="form-group"><label>لوگو</label><input type="file" accept="image/*" onchange="uploadLogo(this)"></div>
                 </div>
             </details>
 
             <details open>
-                <summary><span class="material-icons">person_add</span> مشخصات خریدار</summary>
+                <summary><span class="material-icons">person</span> مشخصات خریدار</summary>
                 <div class="details-body">
-                    <div class="form-group"><label>نام خریدار (نام فایل خروجی)</label><input type="text" id="b_name" oninput="render()"></div>
-                    <div class="row" style="display:flex; gap:5px;">
-                        <div class="col" style="flex:1"><label>سریال</label><input type="text" id="serial" oninput="render()"></div>
-                        <div class="col" style="flex:1"><label>تاریخ</label><input type="text" id="date" oninput="render()"></div>
+                    <div class="form-group"><label>نام خریدار / شرکت</label><input type="text" id="b_name" oninput="render()"></div>
+                    <div class="row" style="display:flex; gap:5px">
+                        <div class="col"><label>شماره فاکتور</label><input type="text" id="serial" oninput="render()"></div>
+                        <div class="col"><label>تاریخ</label><input type="text" id="date" oninput="render()"></div>
                     </div>
+                    <div class="row" style="display:flex; gap:5px">
+                        <div class="col"><label>کد اقتصادی</label><input type="text" id="b_eco" oninput="render()"></div>
+                        <div class="col"><label>شناسه ملی</label><input type="text" id="b_nat" oninput="render()"></div>
+                    </div>
+                    <div class="form-group"><label>آدرس و تلفن خریدار</label><input type="text" id="b_addr" oninput="render()"></div>
                 </div>
             </details>
 
             <details open>
-                <summary><span class="material-icons">receipt_long</span> اقلام و خدمات</summary>
+                <summary><span class="material-icons">shopping_basket</span> کالا و خدمات</summary>
                 <div class="details-body">
                     <div id="items_list"></div>
-                    <button class="btn btn-primary btn-full" onclick="addItem()">+ افزودن ردیف</button>
+                    <button class="btn btn-primary" onclick="addItem()" style="margin-top:10px">+ ردیف جدید</button>
                 </div>
             </details>
 
             <details>
-                <summary><span class="material-icons">edit</span> امضای زنده (Live Signature)</summary>
+                <summary><span class="material-icons">draw</span> امضای زنده</summary>
                 <div class="details-body">
                     <canvas id="signature_pad" class="sig-canvas"></canvas>
-                    <div class="row" style="display:flex; gap:5px; margin-top:5px;">
-                        <button class="btn btn-danger col" style="flex:1" onclick="signaturePad.clear()">پاک کردن</button>
-                        <button class="btn btn-success col" style="flex:1" onclick="saveSignature()">ثبت امضا</button>
+                    <div class="grid-buttons">
+                        <button class="btn btn-danger" onclick="signaturePad.clear()">پاک کردن</button>
+                        <button class="btn btn-success" onclick="saveSignature()">ثبت امضا</button>
                     </div>
                 </div>
             </details>
 
             <details>
-                <summary><span class="material-icons">palette</span> تنظیمات و تم</summary>
+                <summary><span class="material-icons">brush</span> رنگ و تم</summary>
                 <div class="details-body">
-                    <div class="form-group"><label>رنگ سازمانی</label><input type="color" id="color" value="#1e3799" onchange="updateTheme()"></div>
-                    <div class="form-group">
-                        <label>واحد پول</label>
-                        <select id="currency" onchange="render()">
-                            <option value="ریال">ریال</option>
-                            <option value="تومان">تومان</option>
-                        </select>
-                    </div>
+                    <label>رنگ سازمانی</label>
+                    <input type="color" id="color" value="#1e3799" onchange="updateTheme()">
                 </div>
             </details>
 
             <div style="padding:10px; background:#fff; border-radius:12px; margin-top:10px; border:1px solid #ddd;">
-                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
-                    <button class="btn btn-success" onclick="exportImage()"><span class="material-icons">photo</span> عکس</button>
-                    <button class="btn btn-primary" onclick="window.print()"><span class="material-icons">print</span> چاپ</button>
-                    <button class="btn btn-wa" onclick="sendWhatsApp()"><span class="material-icons">chat</span> واتس‌اپ</button>
-                    <button class="btn btn-danger" onclick="archiveAndReset()"><span class="material-icons">save</span> آرشیو</button>
+                <div class="grid-buttons">
+                    <button class="btn btn-success" onclick="exportImage()">عکس PNG</button>
+                    <button class="btn btn-primary" onclick="window.print()">چاپ / PDF</button>
+                    <button class="btn btn-wa" onclick="sendWhatsApp()">واتس‌اپ</button>
+                    <button class="btn btn-danger" onclick="archiveAndReset()">آرشیو و جدید</button>
                 </div>
             </div>
         </div>
@@ -146,28 +145,31 @@
 
     <main class="preview-area">
         <div class="paper" id="invoice_paper">
-            <div id="out_watermark" class="watermark"></div>
-            
-            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:3px solid var(--primary); padding-bottom:15px; margin-bottom:20px;">
-                <div id="out_logo" style="width:100px; height:80px; display:flex; align-items:center; justify-content:center; border:1px dashed #eee;">لوگو</div>
+            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:3px solid var(--primary); padding-bottom:10px; margin-bottom:15px;">
+                <div id="out_logo" style="width:100px; height:80px; display:flex; align-items:center; justify-content:center;">لوگو</div>
                 <div style="text-align:center;">
-                    <h2 id="out_s_name_h" style="margin:0; color:var(--primary);">نام شرکت شما</h2>
-                    <div style="font-size:12px; margin-top:5px;">صورتحساب فروش کالا و خدمات</div>
+                    <h2 id="out_inv_title" style="margin:0; color:var(--primary); font-size:20px;">صورتحساب فروش کالا و خدمات</h2>
+                    <h3 id="out_s_name_h" style="margin:5px 0 0 0; font-size:16px;">نام شرکت شما</h3>
                 </div>
-                <div style="font-size:11px; text-align:left;">
+                <div style="font-size:11px; line-height:1.8">
                     <div>شماره: <strong id="out_serial"></strong></div>
                     <div>تاریخ: <strong id="out_date"></strong></div>
                 </div>
             </div>
 
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:20px;">
-                <div style="border:1px solid #000; padding:10px; border-radius:5px;">
-                    <small style="background:#eee; padding:2px 5px;">فروشنده:</small>
-                    <div id="out_s_info" style="font-size:11px; margin-top:5px; line-height:1.8;"></div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-bottom:15px;">
+                <div class="info-box">
+                    <span class="info-title">مشخصات فروشنده</span>
+                    <strong>نام: </strong><span id="out_s_name"></span><br>
+                    <strong>اقتصادی: </strong><span id="out_s_eco"></span> | <strong>ملی: </strong><span id="out_s_nat"></span><br>
+                    <strong>تلفن: </strong><span id="out_s_tel"></span> | <strong>پستی: </strong><span id="out_s_zip"></span><br>
+                    <strong>نشانی: </strong><span id="out_s_addr"></span>
                 </div>
-                <div style="border:1px solid #000; padding:10px; border-radius:5px;">
-                    <small style="background:#eee; padding:2px 5px;">خریدار:</small>
-                    <div id="out_b_name" style="font-size:13px; font-weight:bold; margin-top:5px;"></div>
+                <div class="info-box">
+                    <span class="info-title">مشخصات خریدار</span>
+                    <strong>نام: </strong><span id="out_b_name"></span><br>
+                    <strong>اقتصادی: </strong><span id="out_b_eco"></span> | <strong>ملی: </strong><span id="out_b_nat"></span><br>
+                    <strong>نشانی و تلفن: </strong><span id="out_b_addr"></span>
                 </div>
             </div>
 
@@ -175,33 +177,34 @@
                 <thead>
                     <tr>
                         <th width="5%">ردیف</th>
-                        <th>شرح</th>
-                        <th width="10%">تعداد</th>
-                        <th width="15%">فی</th>
-                        <th width="20%">جمع کل</th>
+                        <th>شرح کالا یا خدمات</th>
+                        <th width="8%">تعداد</th>
+                        <th width="15%">مبلغ واحد</th>
+                        <th width="12%">تخفیف</th>
+                        <th width="18%">جمع کل (ریال)</th>
                     </tr>
                 </thead>
                 <tbody id="out_tbody"></tbody>
                 <tfoot>
-                    <tr style="background:#f9f9f9; font-weight:bold; font-size:14px;">
-                        <td colspan="4" style="text-align:left; padding:10px;">جمع کل قابل پرداخت (<span class="curr-txt"></span>):</td>
+                    <tr style="background:#f9f9f9; font-weight:bold;">
+                        <td colspan="5" style="text-align:left; padding:8px;">مبلغ قابل پرداخت:</td>
                         <td id="out_total">0</td>
                     </tr>
                 </tfoot>
             </table>
 
-            <div style="margin-top:15px; border:1px solid #000; padding:10px; font-size:12px;">
-                مبلغ به حروف: <span id="out_words" style="font-weight:bold;"></span> <span class="curr-txt"></span>
+            <div style="margin-top:10px; border:1px solid #000; padding:8px; font-size:12px; background:#f9f9f9;">
+                <strong>مبلغ به حروف:</strong> <span id="out_words"></span> ریال
             </div>
 
-            <div style="display:flex; justify-content:space-between; margin-top:50px;">
-                <div style="width:45%; border:1px solid #333; height:130px; border-radius:8px; padding:10px; position:relative;">
+            <div style="display:flex; justify-content:space-between; margin-top:40px;">
+                <div style="width:40%; border:1px solid #333; height:120px; border-radius:5px; padding:5px; position:relative;">
                     <small>مهر و امضای فروشنده:</small>
                     <img id="out_sig" style="position:absolute; bottom:5px; right:5px; max-height:90px; mix-blend-mode:multiply; display:none;">
                 </div>
                 <canvas id="qr_code" style="align-self:center;"></canvas>
-                <div style="width:45%; border:1px solid #333; height:130px; border-radius:8px; padding:10px;">
-                    <small>امضای خریدار:</small>
+                <div style="width:40%; border:1px solid #333; height:120px; border-radius:5px; padding:5px;">
+                    <small>مهر و امضای خریدار:</small>
                 </div>
             </div>
         </div>
@@ -209,25 +212,23 @@
 
     <script>
         let state = { items: [], logo: null, signature: null };
-        let seller = { name: '', tel: '', addr: '' };
+        let seller = {};
         let archive = [];
         let signaturePad;
 
         function init() {
-            // بارگذاری اطلاعات ثابت
-            const savedSeller = localStorage.getItem('pro_seller_v6');
+            // لود اطلاعات ثابت
+            const savedSeller = localStorage.getItem('pro_seller_v7');
             if (savedSeller) {
                 seller = JSON.parse(savedSeller);
-                document.getElementById('s_name').value = seller.name;
-                document.getElementById('s_tel').value = seller.tel;
-                document.getElementById('s_addr').value = seller.addr;
+                Object.keys(seller).forEach(key => {
+                    const el = document.getElementById('s_'+key);
+                    if(el) el.value = seller[key];
+                });
                 state.logo = seller.logo;
             }
 
-            // بارگذاری آرشیو
-            archive = JSON.parse(localStorage.getItem('pro_archive_v6')) || [];
-            
-            // راه‌اندازی امضا
+            archive = JSON.parse(localStorage.getItem('pro_archive_v7')) || [];
             signaturePad = new SignaturePad(document.getElementById('signature_pad'));
 
             addItem();
@@ -236,25 +237,15 @@
         }
 
         function saveSeller() {
-            seller = {
-                name: document.getElementById('s_name').value,
-                tel: document.getElementById('s_tel').value,
-                addr: document.getElementById('s_addr').value,
-                logo: state.logo
-            };
-            localStorage.setItem('pro_seller_v6', JSON.stringify(seller));
+            const fields = ['name', 'eco', 'nat', 'tel', 'zip', 'addr'];
+            fields.forEach(f => seller[f] = document.getElementById('s_'+f).value);
+            seller.logo = state.logo;
+            localStorage.setItem('pro_seller_v7', JSON.stringify(seller));
             render();
         }
 
-        function clearSeller() {
-            if(confirm('تمام اطلاعات ثابت شما حذف شود؟')) {
-                localStorage.removeItem('pro_seller_v6');
-                location.reload();
-            }
-        }
-
         function addItem() {
-            state.items.push({ desc: '', qty: 1, price: 0 });
+            state.items.push({ desc: '', qty: 1, price: 0, disc: 0 });
             renderItemsInputs();
         }
 
@@ -263,40 +254,60 @@
             container.innerHTML = '';
             state.items.forEach((item, idx) => {
                 container.innerHTML += `
-                    <div style="background:#eee; padding:10px; border-radius:8px; margin-bottom:8px; position:relative;">
-                        <input type="text" placeholder="شرح کالا" value="${item.desc}" oninput="state.items[${idx}].desc=this.value; render()" style="margin-bottom:5px;">
-                        <div style="display:flex; gap:5px;">
+                    <div style="background:#f1f1f1; padding:8px; border-radius:8px; margin-bottom:8px; font-size:11px;">
+                        <input type="text" placeholder="شرح کالا" value="${item.desc}" oninput="state.items[${idx}].desc=this.value; render()" style="margin-bottom:5px">
+                        <div style="display:flex; gap:4px">
                             <input type="number" placeholder="تعداد" value="${item.qty}" oninput="state.items[${idx}].qty=this.value; render()">
                             <input type="number" placeholder="فی" value="${item.price}" oninput="state.items[${idx}].price=this.value; render()">
-                            <button onclick="state.items.splice(${idx},1); renderItemsInputs(); render()" style="background:none; color:red; border:none; cursor:pointer;"><span class="material-icons">delete</span></button>
+                            <input type="number" placeholder="تخفیف" value="${item.disc}" oninput="state.items[${idx}].disc=this.value; render()">
+                            <button onclick="state.items.splice(${idx},1); renderItemsInputs(); render()" style="background:red; color:white; border:none; padding:5px; border-radius:4px; cursor:pointer">X</button>
                         </div>
                     </div>`;
             });
         }
 
         function render() {
-            const currency = document.getElementById('currency').value;
-            document.querySelectorAll('.curr-txt').forEach(el => el.innerText = currency);
-
+            // هدر و عنوان
+            document.getElementById('out_inv_title').innerText = document.getElementById('inv_title').value;
             document.getElementById('out_s_name_h').innerText = seller.name || 'نام شرکت شما';
-            document.getElementById('out_s_info').innerHTML = `نام: ${seller.name}<br>تلفن: ${seller.tel}<br>آدرس: ${seller.addr}`;
-            document.getElementById('out_b_name').innerText = document.getElementById('b_name').value;
+            
+            // فروشنده
+            ['name', 'eco', 'nat', 'tel', 'zip', 'addr'].forEach(f => {
+                document.getElementById('out_s_'+f).innerText = seller[f] || '-';
+            });
+
+            // خریدار
+            const bFields = ['name', 'eco', 'nat', 'addr'];
+            bFields.forEach(f => {
+                document.getElementById('out_b_'+f).innerText = document.getElementById('b_'+f).value || '-';
+            });
+
             document.getElementById('out_serial').innerText = document.getElementById('serial').value;
             document.getElementById('out_date').innerText = document.getElementById('date').value;
 
-            if(state.logo) document.getElementById('out_logo').innerHTML = `<img src="${state.logo}" style="max-width:100%; max-height:100%;">`;
+            // لوگو
+            document.getElementById('out_logo').innerHTML = state.logo ? `<img src="${state.logo}" style="max-width:100%; max-height:100%">` : 'لوگو';
 
+            // جدول
             const tbody = document.getElementById('out_tbody');
             tbody.innerHTML = '';
-            let total = 0;
+            let totalPay = 0;
+
             state.items.forEach((item, i) => {
-                let rowSum = item.qty * item.price;
-                total += rowSum;
-                tbody.innerHTML += `<tr><td>${i+1}</td><td style="text-align:right">${item.desc}</td><td>${item.qty}</td><td>${Number(item.price).toLocaleString()}</td><td>${rowSum.toLocaleString()}</td></tr>`;
+                let rowTotal = (item.qty * item.price) - item.disc;
+                totalPay += rowTotal;
+                tbody.innerHTML += `<tr>
+                    <td>${i+1}</td>
+                    <td style="text-align:right">${item.desc}</td>
+                    <td>${item.qty}</td>
+                    <td>${Number(item.price).toLocaleString()}</td>
+                    <td>${Number(item.disc).toLocaleString()}</td>
+                    <td>${rowTotal.toLocaleString()}</td>
+                </tr>`;
             });
 
-            document.getElementById('out_total').innerText = total.toLocaleString();
-            document.getElementById('out_words').innerText = total.toLocaleString('fa-IR');
+            document.getElementById('out_total').innerText = totalPay.toLocaleString();
+            document.getElementById('out_words').innerText = totalPay.toLocaleString('fa-IR');
 
             if(state.signature) {
                 document.getElementById('out_sig').src = state.signature;
@@ -305,20 +316,20 @@
 
             new QRious({
                 element: document.getElementById('qr_code'),
-                value: `فاکتور:${document.getElementById('serial').value}\nمبلغ:${total} ${currency}\nمشتری:${document.getElementById('b_name').value}`,
-                size: 90
+                value: `فاکتور:${document.getElementById('serial').value}\nمبلغ:${totalPay}\nفروشنده:${seller.name}\nخریدار:${document.getElementById('b_name').value}`,
+                size: 80
             });
         }
 
         function saveSignature() {
             state.signature = signaturePad.toDataURL();
             render();
-            alert('امضا ثبت شد.');
+            alert('امضا ثبت شد');
         }
 
         function archiveAndReset() {
             const bName = document.getElementById('b_name').value;
-            if(!bName) return alert('نام خریدار الزامی است.');
+            if(!bName) return alert('نام خریدار را وارد کنید');
             
             archive.push({
                 id: Date.now(),
@@ -327,15 +338,15 @@
                 items: [...state.items],
                 serial: document.getElementById('serial').value
             });
-            localStorage.setItem('pro_archive_v6', JSON.stringify(archive));
+            localStorage.setItem('pro_archive_v7', JSON.stringify(archive));
             
-            // فقط اطلاعات فاکتور را پاک کن، فروشنده بماند
-            document.getElementById('b_name').value = '';
-            state.items = [{ desc: '', qty: 1, price: 0 }];
+            // پاکسازی فیلدهای متغیر
+            ['b_name', 'b_eco', 'b_nat', 'b_addr'].forEach(id => document.getElementById(id).value = '');
+            state.items = [{ desc: '', qty: 1, price: 0, disc: 0 }];
             renderItemsInputs();
             renderArchive();
             render();
-            alert('فاکتور در آرشیو ذخیره شد.');
+            alert('فاکتور آرشیو شد');
         }
 
         function renderArchive() {
@@ -344,8 +355,8 @@
             archive.forEach(item => {
                 container.innerHTML += `
                     <div class="archive-item">
-                        <div onclick="loadArchive(${item.id})"><strong>${item.buyer}</strong><br><small>${item.date}</small></div>
-                        <span class="material-icons" style="color:red;" onclick="deleteArchive(${item.id})">delete</span>
+                        <div onclick="loadArchive(${item.id})"><strong>${item.buyer}</strong> <small>(${item.date})</small></div>
+                        <span class="material-icons" style="color:red; font-size:16px" onclick="deleteArchive(${item.id})">delete</span>
                     </div>`;
             });
         }
@@ -361,9 +372,9 @@
         }
 
         function deleteArchive(id) {
-            if(confirm('حذف فاکتور از آرشیو؟')) {
+            if(confirm('حذف شود؟')) {
                 archive = archive.filter(x => x.id !== id);
-                localStorage.setItem('pro_archive_v6', JSON.stringify(archive));
+                localStorage.setItem('pro_archive_v7', JSON.stringify(archive));
                 renderArchive();
             }
         }
@@ -388,8 +399,7 @@
         function sendWhatsApp() {
             const bName = document.getElementById('b_name').value;
             const total = document.getElementById('out_total').innerText;
-            const currency = document.getElementById('currency').value;
-            const text = `سلام ${bName} عزیز، فاکتور شما صادر شد.\nمبلغ کل: ${total} ${currency}\nبا تشکر از اعتماد شما.`;
+            const text = `سلام ${bName} عزیز، فاکتور شما صادر شد.\nمبلغ نهایی: ${total} ریال.`;
             window.open(`https://wa.me/?text=${encodeURIComponent(text)}`);
         }
 
