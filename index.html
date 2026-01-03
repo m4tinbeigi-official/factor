@@ -3,74 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>فاکتورساز حرفه‌ای | Rick Sanchez</title>
+    <title>فاکتور ساز حرفه‌ای | سیستم مدیریت هوشمند</title>
     
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
     <style>
         :root { --primary: #2c3e50; --bg-panel: #f1f2f6; --border-color: #dfe4ea; }
-        body, input, textarea, select, button, table { font-family: 'Vazirmatn', sans-serif !important; }
+        body, input, textarea, select, button, table, span, div, h1, h2, h3 { font-family: 'Vazirmatn', sans-serif !important; }
         body { margin: 0; display: flex; height: 100vh; background: #ced6e0; overflow: hidden; }
 
-        /* نوار ابزار سمت راست */
-        aside.sidebar { width: 380px; background: #fff; display: flex; flex-direction: column; border-left: 1px solid #ccc; z-index: 10; box-shadow: 0 0 15px rgba(0,0,0,0.1); }
+        /* --- نوار کناری (سمت راست برای آرشیو و تنظیمات) --- */
+        aside.sidebar {
+            width: 360px; background: #fff; display: flex; flex-direction: column;
+            border-left: 1px solid #ccc; z-index: 10; box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        
         .sidebar-header { padding: 15px; background: var(--primary); color: white; display: flex; justify-content: space-between; align-items: center; }
         .sidebar-content { flex: 1; overflow-y: auto; padding: 15px; }
 
-        /* استایل لیست فاکتورهای ذخیره شده */
-        .saved-invoices-list { list-style: none; padding: 0; margin: 0; }
-        .invoice-item { display: flex; justify-content: space-between; align-items: center; padding: 8px; border-bottom: 1px solid #eee; font-size: 12px; }
-        .invoice-item:hover { background: #f9f9f9; }
-        .inv-actions { display: flex; gap: 5px; }
-
         details { border: 1px solid var(--border-color); border-radius: 5px; margin-bottom: 8px; background: #fff; }
         summary { padding: 10px; cursor: pointer; font-weight: bold; font-size: 13px; background: #f8f9fa; display: flex; justify-content: space-between; }
-        .details-body { padding: 10px; border-top: 1px solid var(--border-color); }
+        .details-body { padding: 15px; border-top: 1px solid var(--border-color); }
 
         .form-group { margin-bottom: 10px; }
-        .row { display: flex; gap: 8px; margin-bottom: 5px; }
+        .row { display: flex; gap: 8px; }
         .col { flex: 1; }
-        label { display: block; font-size: 11px; color: #57606f; margin-bottom: 3px; }
-        input, textarea { width: 100%; padding: 8px; border: 1px solid #a4b0be; border-radius: 4px; font-size: 12px; box-sizing: border-box; }
+        
+        label { display: block; font-size: 11px; font-weight: 600; color: #57606f; margin-bottom: 4px; }
+        input, textarea, select { width: 100%; padding: 8px; border: 1px solid #a4b0be; border-radius: 4px; font-size: 12px; box-sizing: border-box; }
 
         .btn { border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; display: inline-flex; align-items: center; gap: 5px; justify-content: center; transition: 0.3s; }
-        .btn-block { width: 100%; margin-bottom: 5px; }
+        .btn-block { width: 100%; margin-top: 5px; }
         .btn-primary { background: var(--primary); color: white; }
         .btn-danger { background: #ff4757; color: white; }
         .btn-success { background: #2ed573; color: white; }
-        .btn-info { background: #1e90ff; color: white; }
+        .btn-warning { background: #ffa502; color: white; }
         .btn-outline { border: 1px solid #ccc; background: white; }
 
-        /* پیش‌نمایش */
-        main.preview-area { flex: 1; overflow-y: auto; padding: 40px; display: flex; justify-content: center; }
-        .paper { width: 210mm; min-height: 297mm; background: white; padding: 15mm; box-shadow: 0 5px 20px rgba(0,0,0,0.2); position: relative; box-sizing: border-box; }
+        /* بخش آرشیو فاکتورها */
+        .archive-list { margin-top: 10px; border: 1px solid #ddd; border-radius: 5px; max-height: 200px; overflow-y: auto; }
+        .archive-item { padding: 8px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; font-size: 11px; }
+        .archive-item:hover { background: #f1f2f6; cursor: pointer; }
+        .archive-item .actions { display: flex; gap: 5px; }
 
-        .invoice-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 15px; }
-        .logo-box img { max-width: 120px; max-height: 80px; }
+        /* پیش‌نمایش فاکتور */
+        main.preview-area { flex: 1; overflow-y: auto; padding: 30px; display: flex; justify-content: center; }
+        .paper { width: 210mm; min-height: 297mm; background: white; padding: 10mm; box-shadow: 0 5px 20px rgba(0,0,0,0.15); position: relative; }
+
+        /* امضا */
+        .sig-box { width: 48%; min-height: 100px; border: 1px solid #000; padding: 5px; font-size: 11px; position: relative; }
+        .signature-img { position: absolute; bottom: 5px; right: 5px; max-height: 70px; mix-blend-mode: multiply; }
+
+        .item-row-control { background: #f9f9f9; padding: 8px; border: 1px solid #eee; margin-bottom: 5px; position: relative; }
         
-        .box-section { border: 1px solid #000; margin-bottom: 5px; border-radius: 4px; overflow: hidden; }
-        .box-header { background: #dfe4ea; font-size: 11px; font-weight: bold; padding: 4px; text-align: center; border-bottom: 1px solid #000; }
-        
-        .inv-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+        .invoice-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--primary); padding-bottom: 10px; margin-bottom: 15px; }
+        .inv-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 10px; }
         .inv-table th, .inv-table td { border: 1px solid #000; padding: 6px; text-align: center; }
-        .inv-table th { background: #dfe4ea; }
-
-        .totals-table { width: 40%; float: left; border-collapse: collapse; font-size: 11px; margin-top: 5px; }
-        .totals-table td { border: 1px solid #000; padding: 5px; }
-
-        .final-words { clear: both; margin-top: 10px; padding: 10px; border: 1px solid #000; background: #f8f9fa; font-size: 12px; font-weight: bold; }
-
-        .signatures { margin-top: 25px; display: flex; justify-content: space-between; }
-        .sig-box { width: 48%; height: 120px; border: 1px solid #000; padding: 10px; font-size: 11px; text-align: center; position: relative; }
-        .sig-img { max-height: 80px; max-width: 100%; position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); }
+        .inv-table th { background: #f1f2f6; }
 
         @media print {
+            aside.sidebar { display: none !important; }
             body { background: white; }
-            .sidebar { display: none !important; }
-            .preview-area { padding: 0; }
-            .paper { box-shadow: none; width: 100%; margin: 0; }
+            main.preview-area { padding: 0; }
+            .paper { box-shadow: none; margin: 0; }
         }
     </style>
 </head>
@@ -78,71 +78,69 @@
 
     <aside class="sidebar">
         <div class="sidebar-header">
-            <div>
-                <h3 style="margin:0">فاکتورساز</h3>
-                <small>Author: <a href="https://www.zhaket.com/store/web/ricksanchez/intro" style="color:#2ed573; text-decoration:none;">Rick Sanchez</a></small>
-            </div>
-            <span class="material-icons">receipt_long</span>
+            <h3>مدیریت فاکتور</h3>
+            <span class="material-icons">description</span>
         </div>
-        
         <div class="sidebar-content">
+            
+            <details open>
+                <summary>فاکتورهای ذخیره شده <span class="material-icons" style="font-size:16px">inventory_2</span></summary>
+                <div class="details-body" style="padding: 5px;">
+                    <div id="archive_container" class="archive-list">
+                        </div>
+                </div>
+            </details>
+
             <details>
-                <summary>فاکتورهای ذخیره شده <span class="material-icons" style="font-size:16px">folder</span></summary>
+                <summary>مشخصات فروشنده (ثابت) <span class="material-icons" style="font-size:16px">store</span></summary>
                 <div class="details-body">
-                    <ul id="saved_list" class="saved-invoices-list">
-                        </ul>
+                    <div class="form-group"><label>نام شرکت/فروشنده</label><input type="text" id="inp_s_name" oninput="saveSellerInfo()"></div>
+                    <div class="form-group"><label>آدرس</label><textarea id="inp_s_addr" oninput="saveSellerInfo()"></textarea></div>
+                    <div class="row">
+                        <div class="col"><label>تلفن</label><input type="text" id="inp_s_tel" oninput="saveSellerInfo()"></div>
+                        <div class="col"><label>کد اقتصادی</label><input type="text" id="inp_s_eco" oninput="saveSellerInfo()"></div>
+                    </div>
+                    <button class="btn btn-danger btn-block" onclick="clearSellerInfo()">حذف اطلاعات ثابت فروشنده</button>
                 </div>
             </details>
 
             <details open>
-                <summary>تنظیمات و برندینگ <span class="material-icons" style="font-size:16px">settings</span></summary>
+                <summary>مشخصات مشتری و فاکتور <span class="material-icons" style="font-size:16px">person</span></summary>
                 <div class="details-body">
+                    <div class="form-group"><label>نام خریدار (نام فاکتور)</label><input type="text" id="inp_b_name" oninput="save()"></div>
+                    <div class="row">
+                        <div class="col"><label>سریال</label><input type="text" id="inp_serial" oninput="save()"></div>
+                        <div class="col"><label>تاریخ</label><input type="text" id="inp_date" oninput="save()"></div>
+                    </div>
+                </div>
+            </details>
+
+            <details>
+                <summary>اقلام فاکتور <span class="material-icons" style="font-size:16px">shopping_cart</span></summary>
+                <div class="details-body" id="items_control_container"></div>
+                <button class="btn btn-primary btn-block" onclick="addItem()">+ افزودن ردیف</button>
+            </details>
+
+            <details>
+                <summary>تنظیمات و امضاء <span class="material-icons" style="font-size:16px">draw</span></summary>
+                <div class="details-body">
+                    <div class="form-group">
+                        <label>انتخاب تصویر امضاء:</label>
+                        <input type="file" accept="image/*" onchange="uploadSignature(this)">
+                    </div>
                     <div class="form-group">
                         <label>رنگ فاکتور:</label>
                         <input type="color" id="inp_color" value="#2c3e50" onchange="updateTheme()">
                     </div>
-                    <div class="form-group">
-                        <label>لوگو شرکت:</label>
-                        <input type="file" accept="image/*" onchange="handleImage(this, 'logo')">
-                    </div>
-                    <div class="form-group">
-                        <label>تصویر امضا فروشنده:</label>
-                        <input type="file" accept="image/*" onchange="handleImage(this, 'sig_s')">
-                    </div>
                 </div>
             </details>
 
-            <details>
-                <summary>اطلاعات طرفین <span class="material-icons" style="font-size:16px">business</span></summary>
-                <div class="details-body">
-                    <input type="text" id="inp_inv_title" placeholder="عنوان فاکتور" oninput="liveUpdate()">
-                    <div class="row">
-                        <input type="text" id="inp_serial" placeholder="سریال" oninput="liveUpdate()">
-                        <input type="text" id="inp_date" placeholder="تاریخ" oninput="liveUpdate()">
-                    </div>
-                    <hr>
-                    <label>فروشنده:</label>
-                    <input type="text" id="inp_s_name" placeholder="نام شرکت فروشنده" oninput="liveUpdate()">
-                    <textarea id="inp_s_addr" placeholder="آدرس فروشنده" oninput="liveUpdate()"></textarea>
-                    <hr>
-                    <label>خریدار:</label>
-                    <input type="text" id="inp_b_name" placeholder="نام شرکت خریدار (نام فایل)" oninput="liveUpdate()">
-                    <textarea id="inp_b_addr" placeholder="آدرس خریدار" oninput="liveUpdate()"></textarea>
-                </div>
-            </details>
-
-            <details open>
-                <summary>اقلام فاکتور <span class="material-icons" style="font-size:16px">list</span></summary>
-                <div class="details-body" id="items_container"></div>
-                <button class="btn btn-primary btn-block" onclick="addItem()">+ افزودن ردیف</button>
-            </details>
-
-            <div style="padding: 10px; background: #f8f9fa; border-radius: 8px; border: 1px solid #ddd;">
+            <div style="margin-top: 20px; padding: 10px; background: #f8f9fa; border-radius: 8px;">
                 <div class="row">
-                    <button class="btn btn-success col" onclick="downloadImg()">خروجی تصویر</button>
-                    <button class="btn btn-info col" onclick="window.print()">چاپ / PDF</button>
+                    <button class="btn btn-success col" onclick="exportAsImage()">خروجی تصویر (PNG)</button>
+                    <button class="btn btn-primary col" onclick="window.print()">چاپ / PDF</button>
                 </div>
-                <button class="btn btn-danger btn-block" onclick="clearAndSave()">پاکسازی و ذخیره در لیست</button>
+                <button class="btn btn-danger btn-block" onclick="resetCurrentInvoice()">پاکسازی و آرشیو فاکتور جاری</button>
             </div>
         </div>
     </aside>
@@ -150,187 +148,281 @@
     <main class="preview-area">
         <div class="paper" id="invoice_paper">
             <div class="invoice-header">
-                <div class="logo-box" id="out_logo"></div>
-                <div style="text-align:center">
-                    <h1 id="out_inv_title" style="margin:0; color:var(--primary)">صورتحساب فروش</h1>
+                <div style="width: 150px;">
+                    <div id="out_logo_placeholder" style="font-size: 10px; color: #ccc;">محل مهر</div>
                 </div>
-                <div style="font-size:11px">
-                    شماره: <span id="out_serial" class="font-bold"></span><br>
-                    تاریخ: <span id="out_date" class="font-bold"></span>
+                <div style="text-align: center;">
+                    <h1 id="out_inv_title" style="margin:0; color:var(--primary);">صورتحساب فروش کالا و خدمات</h1>
+                    <small>نسخه هوشمند آرشیوی</small>
                 </div>
-            </div>
-
-            <div class="box-section">
-                <div class="box-header">مشخصات فروشنده</div>
-                <div style="padding:8px; font-size:11px;">
-                    <b>نام شرکت:</b> <span id="out_s_name"></span> | 
-                    <b>نشانی:</b> <span id="out_s_addr"></span>
+                <div style="font-size: 11px; text-align: left; width: 150px;">
+                    <div>شماره: <span id="out_serial"></span></div>
+                    <div>تاریخ: <span id="out_date"></span></div>
                 </div>
             </div>
 
-            <div class="box-section">
-                <div class="box-header">مشخصات خریدار</div>
-                <div style="padding:8px; font-size:11px;">
-                    <b>نام خریدار:</b> <span id="out_b_name"></span> | 
-                    <b>نشانی:</b> <span id="out_b_addr"></span>
+            <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                <div style="flex: 1; border: 1px solid #000; padding: 5px; border-radius: 4px;">
+                    <strong style="font-size: 12px; display: block; border-bottom: 1px solid #eee; margin-bottom: 5px;">فروشنده:</strong>
+                    <div style="font-size: 11px;">نام: <span id="out_s_name"></span> | تلفن: <span id="out_s_tel"></span></div>
+                    <div style="font-size: 11px;">آدرس: <span id="out_s_addr"></span></div>
+                </div>
+                <div style="flex: 1; border: 1px solid #000; padding: 5px; border-radius: 4px;">
+                    <strong style="font-size: 12px; display: block; border-bottom: 1px solid #eee; margin-bottom: 5px;">خریدار:</strong>
+                    <div style="font-size: 11px;">نام/شرکت: <span id="out_b_name" style="font-weight: bold;"></span></div>
+                    <div style="font-size: 11px;">کد اقتصادی/ملی: <span id="out_b_eco"></span></div>
                 </div>
             </div>
 
             <table class="inv-table">
                 <thead>
                     <tr>
-                        <th>ردیف</th>
+                        <th width="5%">ردیف</th>
                         <th>شرح کالا</th>
-                        <th>تعداد</th>
-                        <th>فی</th>
-                        <th>جمع کل</th>
+                        <th width="10%">تعداد</th>
+                        <th width="15%">فی (ریال)</th>
+                        <th width="20%">جمع کل</th>
                     </tr>
                 </thead>
                 <tbody id="out_tbody"></tbody>
+                <tfoot>
+                    <tr style="background: #eee; font-weight: bold;">
+                        <td colspan="4" style="text-align: left; padding: 10px;">جمع کل قابل پرداخت (ریال):</td>
+                        <td id="out_final_val">0</td>
+                    </tr>
+                </tfoot>
             </table>
 
-            <table class="totals-table">
-                <tr style="background:#dfe4ea; font-weight:bold;">
-                    <td>جمع کل قابل پرداخت (ریال)</td>
-                    <td id="out_final_val">0</td>
-                </tr>
-            </table>
-
-            <div class="final-words">
-                مبلغ به حروف: <span id="out_words"></span> ریال
+            <div style="margin-top: 15px; border: 1px solid #000; padding: 10px; font-size: 12px; border-radius: 4px;">
+                مبلغ به حروف: <span id="out_words_text"></span> ریال
             </div>
 
-            <div class="signatures">
+            <div style="display: flex; justify-content: space-between; margin-top: 40px;">
                 <div class="sig-box">
-                    مهر و امضا فروشنده
-                    <div id="out_sig_s"></div>
+                    مهر و امضاء فروشنده:
+                    <img id="out_sig_img" class="signature-img" src="" style="display:none;">
                 </div>
-                <div class="sig-box">
-                    مهر و امضا خریدار
-                    <div id="out_sig_b"></div>
-                </div>
+                <div class="sig-box">مهر و امضاء خریدار:</div>
             </div>
         </div>
     </main>
 
     <script>
+        // ساختار داده‌ها
         let state = {
-            config: { color: '#2c3e50', logo: null, sig_s: null },
-            fields: { inv_title: 'صورتحساب فروش کالا', b_name: 'شرکت نمونه' },
-            items: [{ desc: 'محصول نمونه', qty: 1, price: 100000 }]
+            serial: '1001',
+            date: '',
+            buyerName: '',
+            items: [],
+            signature: null,
+            themeColor: '#2c3e50'
         };
 
-        // مدیریت لوکال استوریج برای بی‌نهایت فاکتور
-        function getSavedInvoices() {
-            return JSON.parse(localStorage.getItem('rick_invoices') || '[]');
+        // اطلاعات ثابت فروشنده
+        let sellerInfo = { name: '', addr: '', tel: '', eco: '' };
+
+        // لیست فاکتورهای آرشیو شده
+        let archive = [];
+
+        function init() {
+            // بارگذاری اطلاعات فروشنده
+            const savedSeller = localStorage.getItem('fixed_seller_info');
+            if (savedSeller) {
+                sellerInfo = JSON.parse(savedSeller);
+                Object.keys(sellerInfo).forEach(key => {
+                    if(document.getElementById('inp_s_' + key))
+                        document.getElementById('inp_s_' + key).value = sellerInfo[key];
+                });
+            }
+
+            // بارگذاری فاکتور جاری
+            const savedState = localStorage.getItem('current_invoice_state');
+            if (savedState) state = JSON.parse(savedState);
+            else addItem();
+
+            // بارگذاری آرشیو
+            const savedArchive = localStorage.getItem('invoice_archive');
+            if (savedArchive) archive = JSON.parse(savedArchive);
+
+            updateTheme();
+            renderArchive();
+            renderSidebarItems();
+            render();
         }
 
-        function saveToHistory() {
-            let history = getSavedInvoices();
-            const newEntry = {
-                id: Date.now(),
-                buyer: state.fields.b_name || 'بدون نام',
-                data: JSON.parse(JSON.stringify(state))
-            };
-            history.push(newEntry);
-            localStorage.setItem('rick_invoices', JSON.stringify(history));
-            renderSavedList();
+        function save() {
+            state.buyerName = document.getElementById('inp_b_name').value;
+            state.serial = document.getElementById('inp_serial').value;
+            state.date = document.getElementById('inp_date').value;
+            state.themeColor = document.getElementById('inp_color').value;
+            localStorage.setItem('current_invoice_state', JSON.stringify(state));
+            render();
         }
 
-        function loadInvoice(id) {
-            let history = getSavedInvoices();
-            let found = history.find(x => x.id == id);
-            if(found) {
-                state = found.data;
-                syncInputs();
-                liveUpdate();
+        function saveSellerInfo() {
+            sellerInfo.name = document.getElementById('inp_s_name').value;
+            sellerInfo.addr = document.getElementById('inp_s_addr').value;
+            sellerInfo.tel = document.getElementById('inp_s_tel').value;
+            sellerInfo.eco = document.getElementById('inp_s_eco').value;
+            localStorage.setItem('fixed_seller_info', JSON.stringify(sellerInfo));
+            render();
+        }
+
+        function clearSellerInfo() {
+            if(confirm('آیا اطلاعات ثابت فروشنده حذف شود؟')) {
+                localStorage.removeItem('fixed_seller_info');
+                location.reload();
             }
         }
 
-        function deleteInvoice(id) {
-            if(confirm('آیا این فاکتور حذف شود؟')) {
-                let history = getSavedInvoices().filter(x => x.id != id);
-                localStorage.setItem('rick_invoices', JSON.stringify(history));
-                renderSavedList();
-            }
-        }
-
-        function renderSavedList() {
-            const list = document.getElementById('saved_list');
-            list.innerHTML = getSavedInvoices().map(inv => `
-                <li class="invoice-item">
-                    <span>${inv.buyer}</span>
-                    <div class="inv-actions">
-                        <button class="btn btn-primary" style="padding:2px 5px" onclick="loadInvoice(${inv.id})"><span class="material-icons" style="font-size:14px">edit</span></button>
-                        <button class="btn btn-danger" style="padding:2px 5px" onclick="deleteInvoice(${inv.id})"><span class="material-icons" style="font-size:14px">delete</span></button>
-                    </div>
-                </li>
-            `).join('');
-        }
-
-        // عملکردهای اصلی فاکتور
         function addItem() {
             state.items.push({ desc: '', qty: 1, price: 0 });
-            renderItemsUI();
+            renderSidebarItems();
+            save();
         }
 
         function removeItem(idx) {
             state.items.splice(idx, 1);
-            renderItemsUI();
-            liveUpdate();
+            renderSidebarItems();
+            save();
         }
 
-        function renderItemsUI() {
-            const container = document.getElementById('items_container');
-            container.innerHTML = state.items.map((item, idx) => `
-                <div style="background:#f1f2f6; padding:8px; border-radius:5px; margin-bottom:5px; position:relative">
-                    <input type="text" placeholder="شرح" value="${item.desc}" oninput="state.items[${idx}].desc=this.value; liveUpdate()">
-                    <div class="row">
-                        <input type="number" placeholder="تعداد" value="${item.qty}" oninput="state.items[${idx}].qty=this.value; liveUpdate()">
-                        <input type="number" placeholder="قیمت" value="${item.price}" oninput="state.items[${idx}].price=this.value; liveUpdate()">
-                        <button class="btn btn-danger" onclick="removeItem(${idx})">×</button>
-                    </div>
-                </div>
-            `).join('');
+        function updateItem(idx, key, val) {
+            state.items[idx][key] = val;
+            save();
         }
 
-        function liveUpdate() {
-            // فیلدها
-            const f = ['inv_title', 'serial', 'date', 's_name', 's_addr', 'b_name', 'b_addr'];
-            f.forEach(id => {
-                const val = document.getElementById('inp_' + id).value;
-                state.fields[id] = val;
-                document.getElementById('out_' + id).innerText = val;
+        function renderSidebarItems() {
+            const container = document.getElementById('items_control_container');
+            container.innerHTML = '';
+            state.items.forEach((item, idx) => {
+                container.innerHTML += `
+                    <div class="item-row-control">
+                        <span class="material-icons" style="position:absolute; left:5px; color:red; cursor:pointer;" onclick="removeItem(${idx})">delete</span>
+                        <input type="text" placeholder="شرح کالا" value="${item.desc}" oninput="updateItem(${idx}, 'desc', this.value)" style="width:85%; margin-bottom:5px;">
+                        <div class="row">
+                            <input type="number" placeholder="تعداد" class="col" value="${item.qty}" oninput="updateItem(${idx}, 'qty', this.value)">
+                            <input type="number" placeholder="فی" class="col" value="${item.price}" oninput="updateItem(${idx}, 'price', this.value)">
+                        </div>
+                    </div>`;
             });
+        }
 
-            // جدول
+        function render() {
+            // فیلدهای فروشنده
+            document.getElementById('out_s_name').innerText = sellerInfo.name;
+            document.getElementById('out_s_addr').innerText = sellerInfo.addr;
+            document.getElementById('out_s_tel').innerText = sellerInfo.tel;
+            
+            // فیلدهای مشتری
+            document.getElementById('out_b_name').innerText = state.buyerName;
+            document.getElementById('out_serial').innerText = state.serial;
+            document.getElementById('out_date').innerText = state.date;
+
+            // جدول اقلام
             const tbody = document.getElementById('out_tbody');
             tbody.innerHTML = '';
             let total = 0;
+
             state.items.forEach((item, i) => {
-                let sum = item.qty * item.price;
-                total += sum;
-                tbody.innerHTML += `<tr><td>${i+1}</td><td>${item.desc}</td><td>${item.qty}</td><td>${Number(item.price).toLocaleString()}</td><td>${sum.toLocaleString()}</td></tr>`;
+                let rowTotal = item.qty * item.price;
+                total += rowTotal;
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${i+1}</td>
+                        <td style="text-align:right">${item.desc}</td>
+                        <td>${item.qty}</td>
+                        <td>${Number(item.price).toLocaleString()}</td>
+                        <td>${rowTotal.toLocaleString()}</td>
+                    </tr>`;
             });
 
             document.getElementById('out_final_val').innerText = total.toLocaleString();
-            document.getElementById('out_words').innerText = numToPersianWords(total);
+            document.getElementById('out_words_text').innerText = numToPersianWords(total);
             
-            // ذخیره موقت در استوریج برای جلوگیری از پریدن دیتا با رفرش
-            localStorage.setItem('current_draft', JSON.stringify(state));
+            if(state.signature) {
+                document.getElementById('out_sig_img').src = state.signature;
+                document.getElementById('out_sig_img').style.display = 'block';
+            }
         }
 
-        function handleImage(input, type) {
+        // سیستم آرشیو و پاکسازی
+        function resetCurrentInvoice() {
+            if(!state.buyerName) { alert('لطفاً نام خریدار را وارد کنید تا فاکتور آرشیو شود.'); return; }
+            
+            // ذخیره در آرشیو
+            const archiveEntry = {
+                id: Date.now(),
+                name: state.buyerName,
+                date: state.date,
+                data: JSON.parse(JSON.stringify(state))
+            };
+            archive.push(archiveEntry);
+            localStorage.setItem('invoice_archive', JSON.stringify(archive));
+
+            // پاکسازی فاکتور فعلی (بدون حذف فروشنده)
+            state.items = [{ desc: '', qty: 1, price: 0 }];
+            state.buyerName = '';
+            state.serial = (parseInt(state.serial) + 1).toString();
+            save();
+            renderArchive();
+            renderSidebarItems();
+            alert('فاکتور جاری آرشیو و فرم پاکسازی شد.');
+        }
+
+        function renderArchive() {
+            const container = document.getElementById('archive_container');
+            container.innerHTML = archive.length === 0 ? '<div style="padding:10px; color:#999;">آرشیو خالی است</div>' : '';
+            archive.forEach(item => {
+                container.innerHTML += `
+                    <div class="archive-item">
+                        <span onclick="loadArchive(${item.id})">🏢 ${item.name} (${item.date})</span>
+                        <div class="actions">
+                            <span class="material-icons" style="font-size:16px; color:red; cursor:pointer;" onclick="deleteArchive(${item.id})">delete</span>
+                        </div>
+                    </div>`;
+            });
+        }
+
+        function loadArchive(id) {
+            const entry = archive.find(a => a.id === id);
+            if(entry) {
+                state = JSON.parse(JSON.stringify(entry.data));
+                renderSidebarItems();
+                render();
+                // آپدیت اینپوت‌های سایدبار
+                document.getElementById('inp_b_name').value = state.buyerName;
+                document.getElementById('inp_serial').value = state.serial;
+                document.getElementById('inp_date').value = state.date;
+                alert('فاکتور مربوط به ' + entry.name + ' لود شد.');
+            }
+        }
+
+        function deleteArchive(id) {
+            if(confirm('این فاکتور از آرشیو حذف شود؟')) {
+                archive = archive.filter(a => a.id !== id);
+                localStorage.setItem('invoice_archive', JSON.stringify(archive));
+                renderArchive();
+            }
+        }
+
+        // خروجی تصویر
+        function exportAsImage() {
+            const filename = (state.buyerName || 'فاکتور') + '.png';
+            html2canvas(document.getElementById('invoice_paper'), { scale: 2 }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = filename;
+                link.href = canvas.toDataURL("image/png");
+                link.click();
+            });
+        }
+
+        function uploadSignature(input) {
             if (input.files && input.files[0]) {
                 const reader = new FileReader();
-                reader.onload = function(e) {
-                    if(type === 'logo') {
-                        state.config.logo = e.target.result;
-                        document.getElementById('out_logo').innerHTML = `<img src="${e.target.result}">`;
-                    } else {
-                        state.config.sig_s = e.target.result;
-                        document.getElementById('out_sig_s').innerHTML = `<img src="${e.target.result}" class="sig-img">`;
-                    }
+                reader.onload = function(e) { 
+                    state.signature = e.target.result; 
+                    save(); 
                 };
                 reader.readAsDataURL(input.files[0]);
             }
@@ -339,50 +431,18 @@
         function updateTheme() {
             const color = document.getElementById('inp_color').value;
             document.documentElement.style.setProperty('--primary', color);
-            state.config.color = color;
-        }
-
-        function syncInputs() {
-            Object.keys(state.fields).forEach(key => {
-                const el = document.getElementById('inp_' + key);
-                if(el) el.value = state.fields[key];
-            });
-            document.getElementById('inp_color').value = state.config.color;
-            updateTheme();
-            renderItemsUI();
-        }
-
-        function clearAndSave() {
-            saveToHistory();
-            state.fields.b_name = '';
-            state.items = [{ desc: '', qty: 1, price: 0 }];
-            syncInputs();
-            liveUpdate();
-            alert('فاکتور فعلی در لیست ذخیره و فرم پاکسازی شد.');
-        }
-
-        async function downloadImg() {
-            const paper = document.getElementById('invoice_paper');
-            const canvas = await html2canvas(paper, { scale: 2 });
-            const link = document.createElement('a');
-            link.download = `Invoice-${state.fields.b_name || 'Customer'}.jpg`;
-            link.href = canvas.toDataURL('image/jpeg', 0.9);
-            link.click();
+            save();
         }
 
         // تبدیل عدد به حروف (ساده شده)
         function numToPersianWords(number) {
-            if (number == 0) return 'صفر';
-            return "سیستمی (تبدیل حروف فعال است)"; // در صورت نیاز به نسخه کامل تابع قبلی اضافه شود
+            if (number === 0) return 'صفر';
+            const units = ['', 'هزار', 'میلیون', 'میلیارد'];
+            // این یک تابع ساده شده است - برای دقت ۱۰۰٪ می‌توانید کتابخانه مربوطه را اضافه کنید
+            return number.toLocaleString('fa-IR'); 
         }
 
-        window.onload = () => {
-            const draft = localStorage.getItem('current_draft');
-            if(draft) state = JSON.parse(draft);
-            syncInputs();
-            liveUpdate();
-            renderSavedList();
-        };
+        window.onload = init;
     </script>
 </body>
 </html>
